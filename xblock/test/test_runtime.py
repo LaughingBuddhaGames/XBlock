@@ -110,7 +110,7 @@ class TestXBlock(TestXBlockNoFallback):
         if view_name == 'test_fallback_view':
             return Fragment(self.preferences)
         else:
-            return Fragment(u"{} default".format(view_name))
+            return Fragment("{} default".format(view_name))
 
 
 # Allow this tuple to be named as if it were a class
@@ -262,7 +262,7 @@ def test_runtime_render():
     usage_id = runtime.id_generator.create_usage(def_id)
     tester = TestXBlock(runtime, scope_ids=ScopeIds('user', block_type, def_id, usage_id))
     # string we want to update using the handler
-    update_string = u"user state update"
+    update_string = "user state update"
 
     # test against the student view
     frag = runtime.render(tester, 'student_view', [update_string])
@@ -270,19 +270,19 @@ def test_runtime_render():
     assert_equals(tester.preferences, update_string)
 
     # test against the fallback view
-    update_string = u"new update"
+    update_string = "new update"
     frag = runtime.render(tester, 'test_fallback_view', [update_string])
     assert_in(update_string, frag.body_html())
     assert_equals(tester.preferences, update_string)
 
     # test block-first
-    update_string = u"penultimate update"
+    update_string = "penultimate update"
     frag = tester.render('student_view', [update_string])
     assert_in(update_string, frag.body_html())
     assert_equals(tester.preferences, update_string)
 
     # test against the no-fallback XBlock
-    update_string = u"ultimate update"
+    update_string = "ultimate update"
     no_fallback_tester = TestXBlockNoFallback(Mock(), scope_ids=Mock(spec=ScopeIds))
     with assert_raises(NoSuchViewError):
         runtime.render(no_fallback_tester, 'test_nonexistent_view', [update_string])
@@ -523,18 +523,18 @@ class XBlockWithServices(XBlock):
             assert isinstance(str2, six.text_type)
 
         i18n = self.runtime.service(self, "i18n")
-        assert_equals_unicode(u"Welcome!", i18n.ugettext("Welcome!"))
+        assert_equals_unicode("Welcome!", i18n.ugettext("Welcome!"))
 
-        assert_equals_unicode(u"Plural", i18n.ungettext("Singular", "Plural", 0))
-        assert_equals_unicode(u"Singular", i18n.ungettext("Singular", "Plural", 1))
-        assert_equals_unicode(u"Plural", i18n.ungettext("Singular", "Plural", 2))
+        assert_equals_unicode("Plural", i18n.ungettext("Singular", "Plural", 0))
+        assert_equals_unicode("Singular", i18n.ungettext("Singular", "Plural", 1))
+        assert_equals_unicode("Plural", i18n.ungettext("Singular", "Plural", 2))
 
         when = datetime(2013, 2, 14, 22, 30, 17)
-        assert_equals_unicode(u"2013-02-14", i18n.strftime(when, u"%Y-%m-%d"))
-        assert_equals_unicode(u"Feb 14, 2013", i18n.strftime(when, "SHORT_DATE"))
-        assert_equals_unicode(u"Thursday, February 14, 2013", i18n.strftime(when, "LONG_DATE"))
-        assert_equals_unicode(u"Feb 14, 2013 at 22:30", i18n.strftime(when, "DATE_TIME"))
-        assert_equals_unicode(u"10:30:17 PM", i18n.strftime(when, "TIME"))
+        assert_equals_unicode("2013-02-14", i18n.strftime(when, "%Y-%m-%d"))
+        assert_equals_unicode("Feb 14, 2013", i18n.strftime(when, "SHORT_DATE"))
+        assert_equals_unicode("Thursday, February 14, 2013", i18n.strftime(when, "LONG_DATE"))
+        assert_equals_unicode("Feb 14, 2013 at 22:30", i18n.strftime(when, "DATE_TIME"))
+        assert_equals_unicode("10:30:17 PM", i18n.strftime(when, "TIME"))
 
         # secret_service is available.
         assert_equals(self.runtime.service(self, "secret_service"), 17)
