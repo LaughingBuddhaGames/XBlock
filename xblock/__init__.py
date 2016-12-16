@@ -7,7 +7,7 @@ XBlock Courseware Components
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from codecs import open
+import codecs
 import os
 import warnings
 
@@ -33,4 +33,4 @@ xblock.fields.XBlockMixin = XBlockMixin
 
 VERSION_FILE = os.path.join(os.path.dirname(__file__), 'VERSION.txt')
 
-__version__ = open(VERSION_FILE, encoding='ascii').read().strip()
+__version__ = codecs.open(VERSION_FILE, encoding='ascii').read().strip()
