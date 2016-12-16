@@ -1,10 +1,14 @@
-"""Fragments for XBlocks.
+"""
+Fragments for XBlocks.
 
 This code is in the Runtime layer.
-
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from collections import namedtuple
+
+import six
 
 
 FragmentResource = namedtuple("FragmentResource", "kind, data, mimetype, placement")  # pylint: disable=C0103
@@ -27,7 +31,7 @@ class Fragment(object):
     """
     def __init__(self, content=None):
         #: The html content for this Fragment
-        self.content = u""
+        self.content = ""
 
         self._resources = []
         self.js_init_fn = None
@@ -86,7 +90,7 @@ class Fragment(object):
         that it is the only content on the page.
 
         """
-        assert isinstance(content, unicode)
+        assert isinstance(content, six.text_type)
         self.content += content
 
     def _default_placement(self, mimetype):
@@ -251,15 +255,15 @@ class Fragment(object):
         """
         if resource.mimetype == "text/css":
             if resource.kind == "text":
-                return u"<style type='text/css'>\n%s\n</style>" % resource.data
+                return "<style type='text/css'>\n%s\n</style>" % resource.data
             elif resource.kind == "url":
-                return u"<link rel='stylesheet' href='%s' type='text/css'>" % resource.data
+                return "<link rel='stylesheet' href='%s' type='text/css'>" % resource.data
 
         elif resource.mimetype == "application/javascript":
             if resource.kind == "text":
-                return u"<script>\n%s\n</script>" % resource.data
+                return "<script>\n%s\n</script>" % resource.data
             elif resource.kind == "url":
-                return u"<script src='%s' type='application/javascript'></script>" % resource.data
+                return "<script src='%s' type='application/javascript'></script>" % resource.data
 
         elif resource.mimetype == "text/html":
             assert resource.kind == "text"

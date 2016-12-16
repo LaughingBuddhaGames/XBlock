@@ -2,8 +2,14 @@
 XBlock Courseware Components
 """
 
+# For backwards compatability, provide the XBlockMixin in xblock.fields
+# without causing a circular import
+
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 import warnings
+
 import xblock.core
 import xblock.fields
 
