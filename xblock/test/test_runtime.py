@@ -123,7 +123,7 @@ def test_db_model_keys():
     key_store = DictKeyValueStore()
     field_data = KvsFieldData(key_store)
     runtime = TestRuntime(Mock(), mixins=[TestMixin], services={'field-data': field_data})
-    tester = runtime.construct_xblock_from_class(TestXBlock, ScopeIds(u's0', u'TestXBlock', u'd0', u'u0'))
+    tester = runtime.construct_xblock_from_class(TestXBlock, ScopeIds('s0', 'TestXBlock', 'd0', 'u0'))
 
     assert_false(field_data.has(tester, 'not a field'))
 
@@ -570,7 +570,7 @@ def test_ugettext_calls():
     """
     runtime = TestRuntime()
     block = XBlockWithServices(runtime, scope_ids=Mock(spec=[]))
-    assert_equals(block.ugettext('test'), u'test')
+    assert_equals(block.ugettext('test'), 'test')
     assert_true(isinstance(block.ugettext('test'), six.text_type))
 
     # NoSuchServiceError exception should raise if i18n is none/empty.

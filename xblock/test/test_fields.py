@@ -235,13 +235,13 @@ class StringTest(FieldTest):
         self.assertJSONOrSetTypeError({})
 
     def test_control_characters_filtered(self):
-        self.assertJSONOrSetGetEquals(u'', u'\v')
         self.assertJSONOrSetGetEquals('', '\v')
+        self.assertJSONOrSetGetEquals('', b'\v')
         with self.assertRaises(AssertionError):
-            self.assertJSONOrSetGetEquals('\v', u'')
+            self.assertJSONOrSetGetEquals('\v', b'')
         with self.assertRaises(AssertionError):
-            self.assertJSONOrSetGetEquals(u'\v', '')
-        self.assertJSONOrSetGetEquals(u'\n\r\t', u'\n\v\r\b\t')
+            self.assertJSONOrSetGetEquals('\v', '')
+        self.assertJSONOrSetGetEquals('\n\r\t', '\n\v\r\b\t')
 
 
 @ddt.ddt
@@ -252,11 +252,11 @@ class XMLStringTest(FieldTest):
     FIELD_TO_TEST = XMLString
 
     @ddt.data(
-        u'<abc>Hello</abc>',
-        u'<abc attr="yes">Hello</abc>',
-        u'<xml/>',
-        '<bytes/>',
-        '<unicode>\xc8\x88</unicode>',
+        '<abc>Hello</abc>',
+        '<abc attr="yes">Hello</abc>',
+        '<xml/>',
+        b'<bytes/>',
+        b'<unicode>\xc8\x88</unicode>',
         None
     )
     def test_json_equals(self, input_text):
