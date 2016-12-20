@@ -1291,21 +1291,27 @@ class NullI18nService(object):
     @property
     def ugettext(self):
         """
-        Dispatch to the appropriate gettext method
+        Dispatch to the appropriate gettext method to handle text objects.
+
+        Note that under python 3, this uses `gettext()`, while under python 2,
+        it uses `ugettext()`.  This should not be used with bytestrings.
         """
         # pylint: disable=no-member
-        if six.PY3:
-            return self._translations.gettext
-        else:
+        if six.PY2:
             return self._translations.ugettext
+        else:
+            return self._translations.gettext
 
     @property
     def ungettext(self):
         """
-        Dispatch to the appropriate ngettext method
+        Dispatch to the appropriate ngettext method to handle text objects.
+
+        Note that under python 3, this uses `ngettext()`, while under python 2,
+        it uses `ungettext()`.  This should not be used with bytestrings.
         """
         # pylint: disable=no-member
-        if six.PY3:
-            return self._translations.ngettext
-        else:
+        if six.PY2:
             return self._translations.ungettext
+        else:
+            return self._translations.ngettext
